@@ -5,6 +5,7 @@
 package frc.robot;
 
 import frc.robot.utilities.*;
+import frc.robot.commands.Kill;
 import frc.robot.commands.def.*;
 import frc.robot.subsystems.*;
 import edu.wpi.first.wpilibj.GenericHID;
@@ -21,6 +22,8 @@ public class RobotContainer {
   private final Intake m_intake = new Intake();
 
   private final Shintake m_shintake = new Shintake();
+
+  private final Kill kill = new Kill(m_drivetrain, m_shooter, m_shintake, m_intake);
 
   // private final Elevator m_elevator = new Elevator();
 
@@ -46,8 +49,11 @@ public class RobotContainer {
     // Pilot.b().whenPressed(new InstantCommand(m_elevator::rawClimbDown, m_elevator))
     //     .whenReleased(new InstantCommand(m_elevator::stopClimb, m_elevator));
 
-    Pilot.a().toggleWhenPressed(new InstantCommand(m_drivetrain::setCoast));
-    Pilot.x().toggleWhenPressed(new InstantCommand(m_drivetrain::setBrake));
+    Operator.a().toggleWhenPressed(new InstantCommand(m_drivetrain::setCoast));
+    Operator.x().toggleWhenPressed(new InstantCommand(m_drivetrain::setBrake));
+    Operator.b().whenPressed(kill);
+    Operator.y().toggleWhenPressed(new InstantCommand(m_drivetrain::toggleSpeed));
+
 
     m_drivetrain.setDefaultCommand(
         new Driving(m_drivetrain, Pilot::getLeftY, Pilot::getRightX));

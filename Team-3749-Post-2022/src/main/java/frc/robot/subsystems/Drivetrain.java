@@ -36,6 +36,7 @@ public class Drivetrain extends SubsystemBase {
     private double speedMultiplier = 1.0;
     private double rotationMultplier = 1.0;
     private boolean dampen = false;
+    private double previousSpeed = 0.0;
 
     public Drivetrain() {
         setCoast();
@@ -80,16 +81,27 @@ public class Drivetrain extends SubsystemBase {
         m_rightFront.setNeutralMode(NeutralMode.Coast);
     }
 
-    public void setSlow() {
-        speedMultiplier = 0.4;
-        rotationMultplier = 0.75;
-        dampen = true;
+    public void toggleSpeed() {
+        if (dampen){
+            speedMultiplier = 1.0;
+            rotationMultplier = 1.0;
+            dampen = false;
+        }
+        else {
+            speedMultiplier = 0.6;
+            rotationMultplier = 0.75;
+            dampen = true;
+        }
+
     }
     
     public void setNormal() {
-        speedMultiplier = 1.0;
-        rotationMultplier = 1.0;
-        dampen = false;
+
+    }
+
+    public void brake(){
+        arcadeDrive(0, 0);
+        setBrake();
     }
 
     /* 
@@ -97,14 +109,22 @@ public class Drivetrain extends SubsystemBase {
      *  Used during teleop for joystick control of the drivetrain
      */ 
     public void arcadeDrive(double speed, double rotation) {
-
-        speed *= speedMultiplier;
-        if (dampen){
-            speed = speed * speed;
-        }
+        // multiply speeds by a small factor to reduce maximum speed
         rotation *= rotationMultplier;
-
+        speed *= speedMultiplier;
+        // Dampening is mostly just squaring the input, causing it to be significantly less jitery on small movements
+        if (dampen){
+            speed = speed*speed;
+            // This is here in order to prevent sudden stopping. It works by, if the robot is moving decently fast, it slows by dividing the speed slowly instead of instantly changing it.
+            // or maybe just have coast mode on?
+            if (speed < previousSpeed/1.1 && previousSpeed>0.15){
+                speed=previousSpeed/1.1;
+            }
+        }
+        //update the previous speed
+        previousSpeed = speed;
         m_drive.arcadeDrive(speed, -rotation * Constants.Drivetrain.rotationalSpeed);
+        
     }
 
     /**
