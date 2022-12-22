@@ -31,6 +31,9 @@ public class Shooter extends SubsystemBase {
 
   public static NetworkTable m_limelight = NetworkTableInstance.getDefault().getTable("limelight");
 
+  private boolean dead = false;
+
+
   public Shooter() {
     m_leftShooterMotor.setInverted(true);
     m_turretMotor.setInverted(true);
@@ -41,7 +44,17 @@ public class Shooter extends SubsystemBase {
     m_leftShooterMotor.setSensorPhase(false);
   }
 
+  public void kill(){
+    stopMotor();
+    stopTurret();
+    dead = true;
+  }
+
+
   public void setRPM(double target) {
+    if (dead){
+      return;
+    }
     m_shooterMotors.setVoltage(
         m_pidController.calculate(m_leftShooterMotor.getSelectedSensorVelocity(), target * 60) * .0019);
   }
@@ -51,6 +64,9 @@ public class Shooter extends SubsystemBase {
   }
 
   public void rawShoot(double speed) {
+    if (dead){
+      return;
+    }
     m_shooterMotors.set(speed);
   }
 
@@ -63,14 +79,23 @@ public class Shooter extends SubsystemBase {
   }
 
   public void setTurretPosition(double position) {
+    if (dead){
+      return;
+    }
     setTurretMotor(m_pidTurretController.calculate(m_turretEncoder.getPosition(), position));
   }
 
   public void resetTurret() {
+    if (dead){
+      return;
+    }
     setTurretPosition(0);
   }
 
   public void setTurretRaw(double speed) {
+    if (dead){
+      return;
+    }
     m_turretMotor.set(speed * 0.05);
   }
 
@@ -79,6 +104,9 @@ public class Shooter extends SubsystemBase {
   }
 
   public void skewedVisionAlign() {
+    if (dead){
+      return;
+    }
     double hubX = Constants.Auto.tx.getDouble(3749) + 1;
     SmartDashboard.putNumber("Hub Alignment (-3 < x < 3)", hubX - 1);
     if (hubX != 3750)
@@ -88,6 +116,9 @@ public class Shooter extends SubsystemBase {
   }
 
   public void visionAlign() {
+    if (dead){
+      return;
+    }
     double hubX = Constants.Auto.tx.getDouble(3749);
     // double hubX =
     // NetworkTableInstance.getDefault().getTable("limelight").getEntry("tx").getDouble(3749);
@@ -105,6 +136,9 @@ public class Shooter extends SubsystemBase {
   }
 
   public void setTurretMotor(double speed) {
+    if (dead){
+      return;
+    }
     if (Math.abs(m_turretEncoder.getPosition()) <= .23) {
       m_turretMotor.set(speed);
     } else if (m_turretEncoder.getPosition() * speed < 0) { // Checks if speed and encoder position have opposite
@@ -143,14 +177,23 @@ public class Shooter extends SubsystemBase {
   }
 
   public void setTargetVelocity() {
+    if (dead){
+      return;
+    }
     setRPM(targetVelocity());
   }
 
   public void setVelocity(double velocity) {
+    if (dead){
+      return;
+    }
     setRPM(velocity / .476);
   }
 
   public void resetEncoder() {
+    if (dead){
+      return;
+    }
     m_turretEncoder.setPosition(0);
   }
 }

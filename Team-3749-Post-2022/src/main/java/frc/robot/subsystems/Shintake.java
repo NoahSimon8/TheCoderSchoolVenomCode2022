@@ -20,6 +20,9 @@ public class Shintake extends SubsystemBase {
   private RelativeEncoder m_shintakeFrontEncoder;
   private RelativeEncoder m_shintakeBackEncoder;
 
+  private boolean dead = false;
+
+
   public Shintake() {
     m_shintakeFront.setIdleMode(IdleMode.kBrake);
     m_shintakeBack.setIdleMode(IdleMode.kBrake);
@@ -49,36 +52,60 @@ public class Shintake extends SubsystemBase {
     SmartDashboard.putNumber("SHINTAKE BACK ENCODER", m_shintakeBackEncoder.getPosition());
   }
 
+  public void kill(){
+    stopShintake();
+    dead = true;
+  }
+
   public void holdShintake() {
+    if (dead){
+      return;
+    }
     m_shintakeFront.set(-Constants.Shintake.kShintakeSpeed);
     m_shintakeBack.set(-Constants.Shintake.kShintakeSpeed);
   }
   
   public void holdShintakeFix() {
+    if (dead){
+      return;
+    }
     m_shintakeFront.set(-Constants.Shintake.kShintakeSpeed);
     m_shintakeBack.set(-Constants.Shintake.kShintakeSpeed);
   }
 
   public void setShintake() {
+    if (dead){
+      return;
+    }
     m_shintakeFront.set(Constants.Shintake.kShintakeSpeed + 0.01);
     m_shintakeBack.set(Constants.Shintake.kShintakeSpeed);
   }
 
   public void setShintakeFix() {
+    if (dead){
+      return;
+    }
     m_shintakeFront.set(-Constants.Shintake.kShintakeSpeed + 0.01);
     m_shintakeBack.set(Constants.Shintake.kShintakeSpeed);
   }
 
   public void setShintake(double powerCorrection) {
+    if (dead){
+      return;
+    }
     m_shintakeFront.set(Constants.Shintake.kShintakeSpeed + 0.01 + powerCorrection);
     m_shintakeBack.set(Constants.Shintake.kShintakeSpeed + powerCorrection);
   }
 
   public void set24() {
+    if (dead){
+      return;
+    }
     m_shintakeBack.set(0.5);
   }
 
   public void setShintakePID() {
+    
     // PIDController frontPIDController = m_frontEncoder.getVelocity() >
     // Constants.Shintake.targetRPM - 1500 ? m_pidControllerLow :
     // m_pidControllerHigh;
@@ -112,16 +139,25 @@ public class Shintake extends SubsystemBase {
   }
 
   public void setShintakeReverse() {
+    if (dead){
+      return;
+    }
     m_shintakeFront.set(-Constants.Shintake.kShintakeSpeed);
     m_shintakeBack.set(-Constants.Shintake.kShintakeSpeed);
   }
 
   public void stopShintake() {
+    if (dead){
+      return;
+    }
     m_shintakeFront.stopMotor();
     m_shintakeBack.stopMotor();
   }
 
   public void setShintakeVoltage(double volts) {
+    if (dead){
+      return;
+    }
     m_shintakeFront.setVoltage(volts);
     m_shintakeBack.setVoltage(volts);
 

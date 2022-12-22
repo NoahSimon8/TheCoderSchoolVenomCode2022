@@ -10,7 +10,7 @@ import java.util.function.DoubleSupplier;
 
 import edu.wpi.first.wpilibj2.command.CommandBase;
 
-/** An example command that uses an example subsystem. */
+/** A command to instantly and permanently stop all robot movement in emergancies */
 public class Kill extends CommandBase {
     @SuppressWarnings({ "PMD.UnusedPrivateField", "PMD.SingularField" })
 
@@ -33,33 +33,27 @@ public class Kill extends CommandBase {
     @Override
     public void initialize() {
 
-        
-        m_drive.brake();
-        m_intake.stopCompressor();
-        m_intake.stopMotors();
-        m_shooter.stopMotor();
-        m_shooter.stopTurret();
-        m_shintake.stopShintake();
+
+        m_drive.kill();
+        m_intake.kill();
+        m_shooter.kill();
+        m_shintake.kill();
     }
 
     @Override
     public void execute() {
-        m_drive.brake();
-        m_intake.stopCompressor();
-        m_intake.stopMotors();
-        m_shooter.stopMotor();
-        m_shooter.stopTurret();
-        m_shintake.stopShintake();
+        m_drive.kill();
+        m_intake.kill();
+        m_shooter.kill();
+        m_shintake.kill();
     }
 
     @Override
     public void end(boolean interrupted) {
-        m_drive.brake();
-        m_intake.stopCompressor();
-        m_intake.stopMotors();
-        m_shooter.stopMotor();
-        m_shooter.stopTurret();
-        m_shintake.stopShintake();
+        m_drive.kill();
+        m_intake.kill();
+        m_shooter.kill();
+        m_shintake.kill();
     }
 
     // Returns true when the command should end.

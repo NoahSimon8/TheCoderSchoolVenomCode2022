@@ -37,6 +37,7 @@ public class Drivetrain extends SubsystemBase {
     private double rotationMultplier = 1.0;
     private boolean dampen = false;
     private double previousSpeed = 0.0;
+    private boolean dead = false;
 
     public Drivetrain() {
         setCoast();
@@ -99,9 +100,10 @@ public class Drivetrain extends SubsystemBase {
 
     }
 
-    public void brake(){
+    public void kill(){
         arcadeDrive(0, 0);
         setBrake();
+        dead = true;
     }
 
     /* 
@@ -109,6 +111,9 @@ public class Drivetrain extends SubsystemBase {
      *  Used during teleop for joystick control of the drivetrain
      */ 
     public void arcadeDrive(double speed, double rotation) {
+        if (dead){
+            return;
+        }
         // multiply speeds by a small factor to reduce maximum speed
         rotation *= rotationMultplier;
         speed *= speedMultiplier;

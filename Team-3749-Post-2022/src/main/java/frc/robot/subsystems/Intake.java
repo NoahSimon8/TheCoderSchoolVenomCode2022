@@ -20,6 +20,8 @@ public class Intake extends SubsystemBase {
       Constants.Intake.kSolenoidForwardChannel[1],
       Constants.Intake.kSolenoidReverseChannel[1]);
 
+  private boolean dead = false;
+  
   public Intake() {
     m_intakeMotor.setIdleMode(IdleMode.kBrake);
     m_intakeMotor.setInverted(true);
@@ -30,15 +32,30 @@ public class Intake extends SubsystemBase {
     startCompressor();
   }
 
+  public void kill(){
+    stopCompressor();
+    stopIntake();
+    dead = true;
+  }
+
   public void setIntake() {
+    if (dead){
+      return;
+    }
     m_intakeMotor.set(-Constants.Intake.kIntakeSpeed);
   }
 
   public void setIntakeReverse() {
+    if (dead){
+      return;
+    }
     m_intakeMotor.set(-Constants.Intake.kIntakeSpeed);
   }
 
   public void setIntakeHalfReverse() {
+    if (dead){
+      return;
+    }
     m_intakeMotor.set(-Constants.Intake.kIntakeSpeed * 0.25);
   }
 
@@ -51,6 +68,9 @@ public class Intake extends SubsystemBase {
   }
 
   public void startCompressor() {
+    if (dead){
+      return;
+    }
     m_comp.enableDigital();
   }
 
@@ -59,11 +79,17 @@ public class Intake extends SubsystemBase {
   }
 
   public void intakeFwd() {
+    if (dead){
+      return;
+    }
     m_rightPiston.set(DoubleSolenoid.Value.kForward);
     m_leftPiston.set(DoubleSolenoid.Value.kForward);
   }
 
   public void intakeRev() {
+    if (dead){
+      return;
+    }
     m_rightPiston.set(DoubleSolenoid.Value.kReverse);
     m_leftPiston.set(DoubleSolenoid.Value.kReverse);
   }
