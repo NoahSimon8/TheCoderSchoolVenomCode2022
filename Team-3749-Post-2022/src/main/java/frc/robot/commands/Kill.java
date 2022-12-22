@@ -32,6 +32,8 @@ public class Kill extends CommandBase {
 
     @Override
     public void initialize() {
+
+        
         m_drive.brake();
         m_intake.stopCompressor();
         m_intake.stopMotors();

@@ -59,7 +59,7 @@ public final class Constants {
         public static final double lowerRPM = 150; 
         public static final double upperRPM = 500;
         // 340 WORKED FOR 85
-        public static final double turretSpeed = 0.2;
+        public static final double turretSpeed = 0.1;
 
         public static final int turretMotor = 22;
         public static final int rightShooterMotor = 15;

@@ -35,19 +35,19 @@ public class Shooting extends CommandBase {
 
     double turretControl = Constants.round(Operator.getRightX());
 
-    // Op right joystick = turret control (setTurretControl) 
-    if (Math.abs(turretControl) >= .1) {
-      m_shooter.setTurretMotor(turretControl * Constants.Shooter.turretSpeed);
-    
-    // Op right bumper = vision align (visionAlign) 
-    } else if (Operator.rightBumper().get()) {
-      m_shooter.visionAlign();
-
-    // Op left bumper = reset turret (resetTurret)
-    } else if (Operator.leftBumper().get()) {
+    if (Operator.leftBumper().get()) {
       m_shooter.resetTurret();
     
-    } else {
+    } 
+    else if (Pilot.rightBumper().get()) {
+      m_shooter.setTurretMotor(Constants.Shooter.turretSpeed);
+
+    } 
+    else if (Pilot.leftBumper().get()) {
+      m_shooter.setTurretMotor(-Constants.Shooter.turretSpeed);
+
+    } 
+    else {
       m_shooter.stopTurret();
 
     }
@@ -56,23 +56,10 @@ public class Shooting extends CommandBase {
     if (Pilot.getRightTrigger()) {
       m_shooter.setRPM(450);
     
-    // Op left trigger = SHOOT lower hub 
-    } else if (Operator.getLeftTrigger()) {
-      m_shooter.setRPM(Constants.Shooter.lowerRPM);
     
-    // Pilot left bumper = SHOOT lower hub
-    } else if (Pilot.leftBumper().get()) {
-      m_shooter.setRPM(Constants.Shooter.lowerRPM);
-    
-    // Op Dpad up = RUN shooter upper
-    } else if (OpPOV.up().get()) {
-      m_shooter.setRPM(Constants.Shooter.upperRPM);
-    
-    // Op Dpad down = RUN shooter lower
-    } else if (OpPOV.down().get()) {
-      m_shooter.setRPM(Constants.Shooter.lowerRPM);
       
-    } else {
+    } 
+    else {
       m_shooter.stopMotor();
     }
   }
