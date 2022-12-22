@@ -1,6 +1,7 @@
 package frc.robot.commands.def;
 
 import frc.robot.subsystems.*;
+import frc.robot.utilities.POV;
 import frc.robot.utilities.Xbox;
 import edu.wpi.first.wpilibj2.command.CommandBase;
 
@@ -11,10 +12,13 @@ public class Intaking extends CommandBase {
 
   private Xbox Pilot;
 
+  private POV PiPOV;
+
   public Intaking(Intake intake,
-      Xbox pilot) {
+      Xbox pilot, POV piPOV) {
     m_intake = intake;
     Pilot = pilot;
+    PiPOV = piPOV;
     addRequirements(intake);
   }
 
@@ -30,13 +34,10 @@ public class Intaking extends CommandBase {
       m_intake.setIntake();
       m_intake.intakeFwd();
 
-    // Pilot left trigger = outtake (setIntakeReverse & intakeFwd)
-    // } else if (Pilot.getRightTrigger()) {
-    //   m_intake.setIntakeReverse();
-    //   m_intake.intakeFwd();
 
-    // Pilot right bumper = slow outtake (setIntakeHalfReverse & intakeFwd)
-    } else if (Pilot.rightBumper().get()) {
+
+    // Pilot up dpad  = slow outtake (setIntakeHalfReverse & intakeFwd)
+    } else if (PiPOV.up().get()) {
       m_intake.setIntakeHalfReverse();
       m_intake.intakeFwd();
 

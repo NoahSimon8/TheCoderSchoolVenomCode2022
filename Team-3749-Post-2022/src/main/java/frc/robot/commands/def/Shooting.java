@@ -35,6 +35,7 @@ public class Shooting extends CommandBase {
 
     double turretControl = Constants.round(Operator.getRightX());
 
+    
     if (Operator.leftBumper().get()) {
       m_shooter.resetTurret();
     

@@ -34,6 +34,7 @@ public class Intake extends SubsystemBase {
 
   public void kill(){
     stopCompressor();
+    intakeRev();
     stopIntake();
     dead = true;
   }
