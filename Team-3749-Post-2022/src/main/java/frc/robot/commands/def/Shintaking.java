@@ -14,15 +14,15 @@ public class Shintaking extends CommandBase {
 
   private Xbox Pilot;
   private Xbox Operator;
-  private POV PiPOV;
+  private POV OpPOV;
 
   public Shintaking(Shintake shintake, Shooter shooter,
-      Xbox pilot, Xbox operator, POV piPOV) {
+      Xbox pilot, Xbox operator, POV opPOV) {
     Pilot = pilot;
     m_shooter = shooter;
     m_shintake = shintake;
     Operator = operator;
-    PiPOV = piPOV;
+    OpPOV = opPOV;
     addRequirements(shintake);
   }
 
@@ -32,49 +32,35 @@ public class Shintaking extends CommandBase {
 
   @Override
   public void execute() {
+// Is this needed?
 
-    // Operator A = shintake PID
-    if (Operator.a().get()) {
-      m_shintake.setShintakePID();
+    // // Operator A = shintake PID
+    // if (Operator.a().get()) {
+    //   m_shintake.setShintakePID();
 
-      // Pilot right trigger = set shintake (upper hub)
-    } else if (Operator.getRightTrigger()) {
+    //   // Pilot right trigger = set shintake (upper hub)
+    // } 
+
+
+    // This right? Pilot a = upper hub
+    if (Pilot.a().get()) {
       if (m_shooter.getRPM() > Constants.Shooter.upperRPM) {
         m_shintake.setShintakeFix();
       } else {
         m_shintake.stopShintake();
       }
+    } 
 
-      // Pilot left trigger = set shintake (lower hub)
-    } else if (Operator.getLeftTrigger()) {
-      if (m_shooter.getRPM() > Constants.Shooter.lowerRPM - 15) {
-        m_shintake.setShintakeFix();
-      } else {
-        m_shintake.stopShintake();
-      }
 
-      // Pilot left POV = hold shintake
-    } else if (PiPOV.left().get()) {
-      m_shintake.holdShintake();
-
-      // Pilot right POV = reverse shintake
-    } else if (PiPOV.right().get()) {
+      // Operator right POV = reverse shintake
+    else if (OpPOV.right().get()) {
       m_shintake.setShintakeReverse();
 
-      // Pilot left trigger = hold shintake (intake)
-    } else if (Pilot.getLeftTrigger()) {
-      m_shintake.holdShintake();
+    } 
 
-      // Pilot left trigger = hold shintake (intake)
-    // } else if (Pilot.getRightTrigger()) {
-    //   m_shintake.setShintakeReverse();
 
-      // Pilot left bumper = lower hub (setShintake)
-    } else if (Pilot.leftBumper().get()) {
-      m_shintake.setShintake();
-
-      // Pilot right bumper = slow outtake (setShintake)
-    } else if (Pilot.rightBumper().get()) {
+      // Operator left POV = slow outtake (setShintake)
+    else if (Pilot.rightBumper().get()) {
       m_shintake.setShintake();
 
     } else {
