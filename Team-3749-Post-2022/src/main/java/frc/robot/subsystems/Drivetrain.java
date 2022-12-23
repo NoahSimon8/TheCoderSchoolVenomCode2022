@@ -12,6 +12,7 @@ import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
 import frc.robot.utilities.Constants;
 
+import java.lang.Math;
 import com.ctre.phoenix.motorcontrol.NeutralMode;
 import com.ctre.phoenix.motorcontrol.can.WPI_TalonFX;
 
@@ -119,12 +120,12 @@ public class Drivetrain extends SubsystemBase {
         speed *= speedMultiplier;
         // Dampening is mostly just squaring the input, causing it to be significantly less jitery on small movements
         if (dampen){
-            speed = speed*speed;
-            // This is here in order to prevent sudden stopping. It works by, if the robot is moving decently fast, it slows by dividing the speed slowly instead of instantly changing it.
-            // or maybe just have coast mode on?
-            if (speed < previousSpeed/1.1 && previousSpeed>0.15){
-                speed=previousSpeed/1.1;
-            }
+            // square
+            // speed = speed*speed;
+            // sigmoid
+            speed = 2/(1+Math.pow(2.71, -4*speed)) - 1;
+
+            
         }
         //update the previous speed
         previousSpeed = speed;
