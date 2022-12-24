@@ -75,6 +75,6 @@ public class RobotContainer {
     AutoGroups autoGroup = new AutoGroups(m_drivetrain, m_intake, m_shooter, m_shintake);
 
     m_drivetrain.setBrake();
-    return autoGroup.getOneBatb();
+    return autoGroup.getTheCoderSchool();
   }
 }
