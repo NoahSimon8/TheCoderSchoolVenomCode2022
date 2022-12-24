@@ -11,12 +11,12 @@ public class AutoShootTimer extends CommandBase{
     private final Shooter m_shooter;
     private final Shintake m_shintake;
     private final Timer t = new Timer();
-    private final int m_addRPM;
+    private final int addRPM;
 
     public AutoShootTimer(Shooter shooter, Shintake shintake, int addedRPM) {
         m_shooter = shooter;
         m_shintake = shintake;
-        m_addRPM = addedRPM;
+        addRPM = addedRPM;
         addRequirements(shooter, shintake);
     }
 
@@ -29,7 +29,7 @@ public class AutoShootTimer extends CommandBase{
     @Override
     public void execute() {
         // m_shooter.visionAlign();
-        m_shooter.setRPM(Constants.Shooter.upperRPM + m_addRPM);
+        m_shooter.setRPM(Constants.Shooter.upperRPM + addRPM);
         
         if (t.get() > 2.5) m_shintake.setShintakeFix();
 

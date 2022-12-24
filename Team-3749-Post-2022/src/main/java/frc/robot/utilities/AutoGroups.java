@@ -2,6 +2,7 @@ package frc.robot.utilities;
 
 import java.io.IOException;
 import java.nio.file.Path;
+import java.util.ResourceBundle.Control;
 
 import com.pathplanner.lib.PathPlanner;
 import com.pathplanner.lib.PathPlannerTrajectory;
@@ -26,10 +27,10 @@ import frc.robot.commands.auton.*;
 
 public class AutoGroups {
 
-    static Drivetrain m_drivetrain;
-    static Intake m_intake;
-    static Shooter m_shooter;
-    static Shintake m_shintake;
+    public static Drivetrain m_drivetrain;
+    public static Intake m_intake;
+    public static Shooter m_shooter;
+    public static Shintake m_shintake;
 
     public AutoGroups(Drivetrain drive, Intake intake, Shooter shoot, Shintake shintake) {
         m_drivetrain = drive;
@@ -262,5 +263,12 @@ public class AutoGroups {
 
     public final Command tarmacShoot() {
         return shoot();
+    }
+
+
+    public final Command getTheCoderSchool(){
+
+        return new SequentialCommandGroup(
+            ControlAutoCommands.getCommands());
     }
 }

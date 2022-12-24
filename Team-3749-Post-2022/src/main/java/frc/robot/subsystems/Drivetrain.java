@@ -96,10 +96,6 @@ public class Drivetrain extends SubsystemBase {
         }
 
     }
-    
-    public void setNormal() {
-
-    }
 
     public void kill(){
         arcadeDrive(0, 0);
