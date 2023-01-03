@@ -59,10 +59,13 @@ public class AutoDrivetrain extends CommandBase {
             //also what should the time multiplier be
             return t.get()>0.02*Math.abs(rotation);
 
-        } else {
+        } 
+        else if (distance>0) {
             // I got nooooooo clue what the correct multipliers to get distance should be
-            return Math.abs(m_drivetrain.getAverageEncoderDistance() - start_distance) >= Math
-                    .abs(distance * Constants.Auto.wheelMult);
+            return (m_drivetrain.getAverageEncoderDistance() - start_distance) >= (distance * Constants.Auto.wheelMult);
+        }
+        else{
+            return (m_drivetrain.getAverageEncoderDistance() - start_distance) <= (distance * Constants.Auto.wheelMult);
         }
 
     }

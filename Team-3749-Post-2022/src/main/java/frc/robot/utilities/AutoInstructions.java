@@ -22,24 +22,12 @@ public class AutoInstructions {
 
     static void writeInstructions(){
 
-        // DO NOT USE TO MOVE YET, TEST MULTIPLIERS TO GET DISTANCE
-
         // Example:
-        // forward(10);
+        // forward(feet);
+        // right(degrees);
         // shoot();
-        // backward(10)
-        
-        // Now you try!
-        forward(1);
-        left(90);
-        right(90);
-        backward(1);
-        intake();
-        shoot();
-        wait(5);
 
-
-
+        forward(1);        
     }
 
 
