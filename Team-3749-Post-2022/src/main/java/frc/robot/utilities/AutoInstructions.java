@@ -27,7 +27,18 @@ public class AutoInstructions {
         // right(degrees);
         // shoot();
 
-        forward(1);        
+        forward(2); 
+        wait(1);
+        right(90);
+        wait(1);
+        shoot();
+        wait(1);
+        intake();
+        wait(1);
+        left(90);
+        backward(1);
+
+
     }
 
 
