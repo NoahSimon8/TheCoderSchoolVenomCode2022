@@ -23,7 +23,7 @@ public class AutoInstructions {
     static void writeInstructions(){
 
         // Example:
-        // forward(feet);
+        // backward(feet);
         // right(degrees);
         // shoot();
 
