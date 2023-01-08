@@ -34,6 +34,7 @@ public class ResetDrivetrain extends CommandBase {
 
     @Override
     public void end(boolean interrupted) {
+        System.out.println("RESET DRIVE");
         t.stop();
     }
 

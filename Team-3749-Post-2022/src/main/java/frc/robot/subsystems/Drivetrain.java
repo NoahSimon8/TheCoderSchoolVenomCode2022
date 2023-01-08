@@ -41,6 +41,7 @@ public class Drivetrain extends SubsystemBase {
     private boolean dead = false;
 
     public Drivetrain() {
+        dead = false;
         setCoast();
 
         m_right.setInverted(true);
@@ -90,7 +91,7 @@ public class Drivetrain extends SubsystemBase {
             dampen = false;
         }
         else {
-            speedMultiplier = 0.6;
+            speedMultiplier = 0.3;
             rotationMultplier = 0.75;
             dampen = true;
         }
@@ -98,6 +99,7 @@ public class Drivetrain extends SubsystemBase {
     }
 
     public void kill(){
+        System.out.println("DEAD");
         arcadeDrive(0, 0);
         setBrake();
         dead = true;
@@ -108,25 +110,17 @@ public class Drivetrain extends SubsystemBase {
      *  Used during teleop for joystick control of the drivetrain
      */ 
     public void arcadeDrive(double speed, double rotation) {
-        if (dead){
-            return;
-        }
         // multiply speeds by a small factor to reduce maximum speed
-        rotation *= rotationMultplier;
-        speed *= speedMultiplier;
+        // rotation *= rotationMultplier;
+        // speed *= speedMultiplier;
         // Dampening is mostly just squaring the input, causing it to be significantly less jitery on small movements
-        if (dampen){
-            // square
-            // speed = speed*speed;
-            // sigmoid
-            speed = 2/(1+Math.pow(2.71, -4*speed)) - 1;
 
-            
-        }
         //update the previous speed
-        previousSpeed = speed;
+
         m_drive.arcadeDrive(speed, -rotation * Constants.Drivetrain.rotationalSpeed);
         
+    
+
     }
 
     /**
@@ -167,12 +161,16 @@ public class Drivetrain extends SubsystemBase {
      *  RamseteCommand object uses this in accordance with PID calcuations to generate commands for trajectories
      */
     public void tankDriveVolts(double leftVolts, double rightVolts) {
+        System.out.println("VOLTS");
+
         m_left.setVoltage(-leftVolts * 0.3);
         m_right.setVoltage(-rightVolts * 0.3);
         m_drive.feed();
     }
 
     public void tankDriveVoltsBackwards(double leftVolts, double rightVolts) {
+        System.out.println("VOLTS");
+
         m_left.setVoltage(leftVolts * 0.3);
         m_right.setVoltage(rightVolts * 0.3);
         m_drive.feed();
@@ -198,6 +196,8 @@ public class Drivetrain extends SubsystemBase {
      * @param maxOutput the maximum output to which the drive will be constrained
      */
     public void setMaxOutput(double maxOutput) {
+        System.out.println("MAX");
+
         m_drive.setMaxOutput(maxOutput);
     }
 
@@ -243,6 +243,8 @@ public class Drivetrain extends SubsystemBase {
      * Turns off drivetrain
      */ 
     public void stop() {
+        System.out.println("MOVE");
+
         m_drive.arcadeDrive(0, 0);
     }
 

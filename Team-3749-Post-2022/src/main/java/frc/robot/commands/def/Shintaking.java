@@ -44,7 +44,7 @@ public class Shintaking extends CommandBase {
 
     // This right? Pilot a = upper hub
     if (Pilot.a().get()) {
-      if (m_shooter.getRPM() > Constants.Shooter.upperRPM) {
+      if (m_shooter.getRPM() < Constants.Shooter.upperRPM) {
         m_shintake.setShintakeFix();
       } else {
         m_shintake.stopShintake();

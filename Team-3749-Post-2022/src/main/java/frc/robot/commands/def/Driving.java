@@ -31,6 +31,7 @@ public class Driving extends CommandBase {
 
     @Override
     public void execute() {
+        System.out.println("DRIVING");
         m_drive.arcadeDrive(y.getAsDouble(), x.getAsDouble());
     }
 

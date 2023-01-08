@@ -1,6 +1,7 @@
 package frc.robot.commands.auton;
 
 import frc.robot.subsystems.*;
+import edu.wpi.first.wpilibj.Timer;
 import edu.wpi.first.wpilibj2.command.CommandBase;
 
 public class AutoIntake extends CommandBase {
@@ -8,6 +9,7 @@ public class AutoIntake extends CommandBase {
     
     private final Intake m_intake;
     private final Shintake m_shintake;
+    private final Timer t = new Timer();
 
     public AutoIntake(Intake intake, Shintake shintake) {
         m_intake = intake;
@@ -17,6 +19,8 @@ public class AutoIntake extends CommandBase {
 
     @Override
     public void initialize() {
+        t.reset();
+        t.start();
         m_intake.intakeFwd();
     }
 
@@ -36,6 +40,8 @@ public class AutoIntake extends CommandBase {
     // Returns true when the command should end.
     @Override
     public boolean isFinished() {
-        return false;
+
+        return (t.get() >= 2.5);
+
     }
 }

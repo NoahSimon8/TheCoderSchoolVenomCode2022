@@ -29,18 +29,21 @@ public class AutoInstructions {
         // shoot();
 
 
-
-        forward(2); 
-        // wait(1);
+        // forward(4);
+        // wait(0.2);
+        left(180);
+        // wait(0.2);
+        // forward(2);
+        // wait(0.2);
+        // right(180);
+        // forward(2);
+        // shoot();
         // right(90);
-        // wait(1);
-        shoot();
-        // wait(1);
-        // intake();
-        // wait(1);
-        // left(90);
         // backward(1);
-
+        // wait(0.2);
+        // intake();
+        // forward(5);
+        // right(180);
 
 
 
@@ -60,10 +63,18 @@ public class AutoInstructions {
         controller.addCommand(new AutoIntake(controller.m_intake, controller.m_shintake));
     }
     private void forward(double feet){
+        System.out.println("PREDRIIIIVEE");
+
         controller.addCommand(new AutoDrivetrain(controller.m_drivetrain, feet, 0));
+        System.out.println("DRIIIIVEE");
+
     }
     private void forward(int feet){
+        System.out.println("PREDRIIIIVEE");
+
         controller.addCommand(new AutoDrivetrain(controller.m_drivetrain, (double)feet, 0));
+        System.out.println("DRIIIIVEE");
+
     }
     private void backward(double feet){
         controller.addCommand(new AutoDrivetrain(controller.m_drivetrain, -feet, 0));

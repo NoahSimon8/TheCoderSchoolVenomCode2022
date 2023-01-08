@@ -10,8 +10,8 @@ import edu.wpi.first.wpilibj2.command.CommandBase;
 
 public class ControlAutoCommands {
     @SuppressWarnings({ "PMD.UnusedPrivateField", "PMD.SingularField" })
-    private ArrayList<Command> commands;
-
+    private Command[] commands = new Command[200];
+    private int cmdIndex = 0;
 
     public Drivetrain m_drivetrain;
     public Intake m_intake;
@@ -30,13 +30,29 @@ public class ControlAutoCommands {
     public Command[] getCommands(){
         AutoInstructions instructions = new AutoInstructions(this);
         instructions.writeInstructions();
-        // SmartDashboard.putNumber("Size", commands.size());
-        System.out.println(commands.size());
-        return (Command[])commands.toArray();
+
+        Command[] temp = new Command[cmdIndex];
+        int count = 0;
+        for (Command cmd : commands){
+            if (cmd != null){
+                System.out.println(count);
+                temp[count] = cmd;
+                count++;
+            }
+        }
+
+        for (Command cmd : temp){
+            System.out.println(cmd);
+        }
+
+        return (temp);
     }
 
     public void addCommand(Command cmd){
-        commands.add(cmd);
+        System.out.println(cmd.getClass().getName());
+        commands[cmdIndex] = cmd;
+        cmdIndex++;
+        
     }
 
 }
