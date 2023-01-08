@@ -59,11 +59,7 @@ public class Shintaking extends CommandBase {
     } 
 
 
-      // Operator left POV = slow outtake (setShintake)
-    else if (Pilot.rightBumper().get()) {
-      m_shintake.setShintake();
-
-    } else {
+     else {
       m_shintake.stopShintake();
 
     }

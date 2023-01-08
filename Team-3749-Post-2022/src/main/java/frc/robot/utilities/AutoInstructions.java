@@ -28,20 +28,21 @@ public class AutoInstructions {
         // right(degrees);
         // shoot();
 
-
+        
         // forward(4);
         // wait(0.2);
-        left(180);
+        // left(180);
         // wait(0.2);
         // forward(2);
         // wait(0.2);
-        // right(180);
+        //  right(180);
         // forward(2);
-        // shoot();
+        //  shoot();
         // right(90);
         // backward(1);
         // wait(0.2);
-        // intake();
+         intake();
+        // sloths_are_cool(0.2)
         // forward(5);
         // right(180);
 

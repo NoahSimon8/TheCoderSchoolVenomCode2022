@@ -91,7 +91,7 @@ public class Drivetrain extends SubsystemBase {
             dampen = false;
         }
         else {
-            speedMultiplier = 0.3;
+            speedMultiplier = 0.6;
             rotationMultplier = 0.75;
             dampen = true;
         }
@@ -111,8 +111,8 @@ public class Drivetrain extends SubsystemBase {
      */ 
     public void arcadeDrive(double speed, double rotation) {
         // multiply speeds by a small factor to reduce maximum speed
-        // rotation *= rotationMultplier;
-        // speed *= speedMultiplier;
+        rotation *= rotationMultplier;
+        speed *= speedMultiplier;
         // Dampening is mostly just squaring the input, causing it to be significantly less jitery on small movements
 
         //update the previous speed
